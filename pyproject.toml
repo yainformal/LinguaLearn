@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "lingualearn"
+version = "0.1.0"
+description = ""
+authors = ["Mikail Gubanov <yainformal@ya.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytest = "^7.2.2"
+mypy = "^1.2.0"
+pylint = "^2.17.2"
+flake8 = "^6.0.0"
+django = "^4.2"
+readme-md = "^2019.1.28"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
