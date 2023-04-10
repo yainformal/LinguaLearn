@@ -211,6 +211,49 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-crispy-forms"
+version = "2.0"
+description = "Best way to have Django DRY forms"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django-crispy-forms-2.0.tar.gz", hash = "sha256:90193b068bf948d9c68449bc8260afed1a8e2afe11ee0bac8c4ebfaeb175b322"},
+    {file = "django_crispy_forms-2.0-py3-none-any.whl", hash = "sha256:d1d4e585929058a9ab3b797666ea5b69320b9ba7937f9d146d32173246a6fd13"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[[package]]
+name = "django-debug-toolbar"
+version = "4.0.0"
+description = "A configurable set of panels that display various debug information about the current request/response."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_debug_toolbar-4.0.0-py3-none-any.whl", hash = "sha256:bad339d68520652ddc1580c76f136fcbc3e020fd5ed96510a89a02ec81bb3fb1"},
+    {file = "django_debug_toolbar-4.0.0.tar.gz", hash = "sha256:89619f6e0ea1057dca47bfc429ed99b237ef70074dabc065a7faa5f00e1459cf"},
+]
+
+[package.dependencies]
+django = ">=3.2.4"
+sqlparse = ">=0.2"
+
+[[package]]
+name = "django-webpack-loader"
+version = "1.8.1"
+description = "Transparently use webpack with django"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-webpack-loader-1.8.1.tar.gz", hash = "sha256:073beda18e2929fa5cd83bafbcaaf975e5945e84a17bfa81927cb6c9f5a17b94"},
+    {file = "django_webpack_loader-1.8.1-py2.py3-none-any.whl", hash = "sha256:2d50a902256cf94bdd87eac3e7687989c9aa757a63af21db68773115216cedee"},
+]
+
+[[package]]
 name = "flake8"
 version = "6.0.0"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -816,4 +859,4 @@ mkdir = "*"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "8fdf25432e80446063569ec1e9c58e07bffe5a819d785cf45a9ef51817ce8a8d"
+content-hash = "3a101aabdd1b210a50b9364f3d48847bee5007ea4e516eb478325fcb2b1d618c"
