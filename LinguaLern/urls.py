@@ -21,5 +21,5 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path ('', views.index), # если нет пути, то главная страница
-    #path ('') #TODO: lj,fdbnm
+    path ('auth/',views.user_auth_view) #TODO: lj,fdbnm
 ]
