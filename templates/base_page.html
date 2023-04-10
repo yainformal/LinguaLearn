@@ -1,67 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-
+  {% load static %}
+<html lang="ru">
 <head>
-    <title>Math Learning Website</title>
-    <!-- Подключение стилей Materialize.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block pagetitle %}{% endblock %}</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'materialize/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'materialize/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
 </head>
-
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Math Learning</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Lessons</a></li>
-                <li><a href="#">Practice</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        <h1>Welcome to Math Learning!</h1>
-        <p>Learn math in a fun and interactive way.</p>
-        <div class="row">
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Lessons</span>
-                        <p>Access our library of math lessons covering various topics and difficulty levels.</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Practice</span>
-                        <p>Test your math skills with our interactive practice exercises and quizzes.</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">About Us</span>
-                        <p>Learn more about our team and the mission of our math learning website.</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+
+      <a id="logo-container" href="/user_auth/" class="brand-logo"> <!-- TODO: Изменить ссылку после подбора интересной-->
+        <img src="{% static 'img/translation.png' %}" alt="Картинка" width="62" height="55" style="margin-top: 5px;"/>  <!-- TODO: подумать над логотипов-->
+
+        </a>
+
+     {% block authlink %}
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/user_auth/"></a></li>  <!-- TODO: Изменить ссылку для авторизованного пользователя-->
+      </ul>
+     {% endblock %}
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
+  </nav>
 
-    <!-- Подключение скриптов Materialize.css -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</body>
+  <style>
+        .container {
+            margin-top: 0px; /* Добавляем отступ сверху */
+            margin-bottom: 50px; /* Добавляем отступ снизу */
+        }
 
+        form {
+            margin-top: 20px; /* Добавляем отступ сверху для формы */
+        }
+    </style>
+
+
+  <main>
+        <!-- Ваш контент на каждой странице -->
+    {% block content %}
+    {% endblock %}
+    </main>
+
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'materialize/js/materialize.js'%}"></script>
+  <script src="{% static 'materialize/js/init.js'%}"></script>
+
+  </body>
 </html>
