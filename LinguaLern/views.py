@@ -6,11 +6,11 @@ from django.core.cache import cache
 
 
 def index(request):
-    return render(request, "index_b.html")
+    return render(request, "index.html")
 
 
 def user_auth_view(request):
-    return render(request, "auth_b.html")
+    return render(request, "auth.html")
 
 def authentication(request):
     if request.method == 'POST':
