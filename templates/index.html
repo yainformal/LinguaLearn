@@ -8,15 +8,21 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="{% static 'materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="{% static 'style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'materialize/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'materialize/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">Logo</a>
+
+      <a id="logo-container" href="/user_auth/" class="brand-logo"> <!-- TODO: Изменить ссылку после подбора интересной-->
+        <img src="{% static 'img/adobe.png' %}" alt="Картинка"/>  <!-- TODO: подумать над логотипов-->
+        
+        </a>
+
+
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
+        <li><a href="/user_auth/">Авторизация</a></li>  <!-- TODO: Изменить ссылку для авторизованного пользователя-->
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
@@ -41,7 +47,7 @@
 
       </div>
     </div>
-    <div class="parallax"><img src="{% static 'background1.jpg'%}" alt="Unsplashed background img 1"></div>
+    <div class="parallax"><img src="{% static 'img/background1.jpg'%}" alt="Unsplashed background img 1"></div>
   </div>
 
 
@@ -90,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="{% static 'background2.jpg'%}"  alt="Unsplashed background img 2"></div>
+    <div class="parallax"><img src="{% static 'img/background2.jpg'%}"  alt="Unsplashed background img 2"></div>
   </div>
 
   <div class="container">
@@ -116,7 +122,7 @@
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="{% static 'background3.jpg'%}"  alt="Unsplashed background img 3"></div>
+    <div class="parallax"><img src="{% static 'img/background3.jpg'%}"  alt="Unsplashed background img 3"></div>
   </div>
 
   <footer class="page-footer teal">
@@ -158,8 +164,8 @@
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'materialize.js'%}"></script>
-  <script src="{% static 'init.js'%}"></script>
+  <script src="{% static 'materialize/js/materialize.js'%}"></script>
+  <script src="{% static 'materialize/js/init.js'%}"></script>
 
   </body>
 </html>

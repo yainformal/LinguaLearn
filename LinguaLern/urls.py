@@ -18,8 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-urlpatterns = [
+urlpatterns = {
     path("admin/", admin.site.urls),
-    path ('', views.index), # если нет пути, то главная страница
-    #path ('') #TODO: lj,fdbnm
-]
+    path('', views.index),  # если нет пути, то главная страница
+    path('user_auth/', views.user_auth_view), # ссылка на страницу авторизации
+    path('authentication/', views.authentication)
+}
