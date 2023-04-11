@@ -21,6 +21,7 @@ from . import views
 urlpatterns = {
     path("admin/", admin.site.urls),
     path('', views.index),  # если нет пути, то главная страница
+    path('index/', views.index),
     path('user_auth/', views.user_auth_view), # ссылка на страницу авторизации
     path('authentication/', views.authentication)
 }
