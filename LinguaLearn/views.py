@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.core.files.storage import default_storage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 
 
 def index(request):
@@ -21,15 +23,20 @@ def authentication(request):
         # Получаем значения из формы
         username = request.POST.get('username')
         password = request.POST.get('password')
-        """
-        # Выполняем проверку данных
-        if username and password:
-            #TODO: реализовать первую базу данных, для проверки логина и пароля
-            #Если данные прошли проверку, выполняем необходимые действия
-            return redirect('')  # перенаправление на домашнюю страницу или другую страницу
-         """
-        # ... остальной код вашего представления ...
-    return index(request)
+
+
+        user = authenticate(request, username=username, password=password) # метод аутентификации
+
+        if user is not None:
+            # Если пользователь найден, проводим вход в систему
+            login(request, user)
+            return HttpResponse('Вход в систему успешно выполнен.')
+        else:
+            return HttpResponse('Ошибка: неверный логин или пароль.')
+    else:
+        return render(request, 'auth.html')
+
+    return index(request)   #TODO: необходимо проработать маршрут для авторизованного пользователя
 
 
 
@@ -47,8 +54,8 @@ def upload_avatar(request):
         # Загружаем новый аватар
         user.avatar = image
         user.save()
-        return redirect('profile')  # перенаправляем на страницу профиля пользователя
-    return render(request, 'upload_avatar.html')  # отображаем форму загрузки аватара
+        return redirect('profile')  #TODO создать страницу перенаправляем на страницу профиля пользователя
+    return render(request, 'upload_avatar.html')  #TODO:создать  страницу отображаем форму загрузки аватара
 
 @login_required
 def delete_avatar(request):
@@ -62,7 +69,7 @@ def delete_avatar(request):
             default_storage.delete(user.avatar.path)
             user.avatar = None
             user.save()
-        return redirect('profile')  # перенаправляем на страницу профиля пользователя
+        return redirect('profile')  #TODO: перенаправляем на страницу профиля пользователя (необходимо реализовать)
     return render(request, 'delete_avatar.html')  # отображаем форму удаления аватара
 
 @login_required
