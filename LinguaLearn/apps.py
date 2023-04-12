@@ -6,7 +6,7 @@ from django.apps import AppConfig
 from django.core.management import call_command
 
 class MyAppConfig(AppConfig):
-    name = 'LinguaLern'
+    name = 'LinguaLearn'
 
     def ready(self):
         # команда для запуска миграции моделей в базу данных при запуске приложения
