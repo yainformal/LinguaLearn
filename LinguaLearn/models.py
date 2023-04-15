@@ -2,6 +2,7 @@
 Файл содержащий описание моделей приложения
 """
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(models.Model):
@@ -16,8 +17,11 @@ class CustomUser(models.Model):
     customer_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    birth_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     avatar = models.FileField(upload_to='avatars/', blank=True, null=True)
+
+    USERNAME_FIELD = 'email'
 
     class Meta:
         db_table = 'lingualearn_customer'

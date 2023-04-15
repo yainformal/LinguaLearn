@@ -1,0 +1,168 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block pagetitle %} Регистрация {% endblock %}
+
+{% block content %}
+
+<script>
+<!-- : Скрип для управления полем ввода даты-->
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.datepicker');
+      var options = {
+        format: 'dd.mm.yyyy', // Формат даты
+        i18n: {
+          cancel: 'Отмена', // Текст кнопки отмены на русском
+          clear: 'Очистить', // Текст кнопки очистки на русском
+          done: 'Готово', // Текст кнопки подтверждения на русском
+          months:
+          [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь'
+          ],
+          monthsShort:
+          [
+            'Янв',
+            'Фев',
+            'Мар',
+            'Апр',
+            'Май',
+            'Июн',
+            'Июл',
+            'Авг',
+            'Сен',
+            'Окт',
+            'Ноя',
+            'Дек'
+          ],
+          weekdays:
+          [
+            'Воскресенье',
+            'Понедельник',
+            'Вторник',
+            'Среда',
+            'Четверг',
+            'Пятница',
+            'Суббота'
+          ],
+          weekdaysAbbrev:
+          [
+            'Вс',
+            'Пн',
+            'Вт',
+            'Ср',
+            'Чт',
+            'Пт',
+            'Сб'
+          ],
+          weekdaysShort:
+          [
+            'Вс',
+            'Пн',
+            'Вт',
+            'Ср',
+            'Чт',
+            'Пт',
+            'Суб'
+          ]
+        },
+        firstDay: 1 // Неделя начинается с понедельника
+        // Другие настройки Date Picker здесь
+      };
+      var instances = M.Datepicker.init(elems, options);
+    });
+
+
+
+
+  // Получаем ссылки на элементы input по их id
+  var passwordInput = document.getElementById("password");
+  var twoPasswordInput = document.getElementById("two_password");
+
+  // Добавляем обработчик события на ввод данных в поле "Повторите пароль"
+  twoPasswordInput.addEventListener('input', function() {
+    // Получаем значения из обоих полей
+    var passwordValue = passwordInput.value;
+    var twoPasswordValue = twoPasswordInput.value;
+
+    // Удаляем класс с подсветкой ошибки с обоих полей (если был ранее установлен)
+    passwordInput.classList.remove('error');
+    twoPasswordInput.classList.remove('error');
+
+    // Сравниваем значения и проверяем длину паролей
+    if (passwordValue === twoPasswordValue && passwordValue.length >= 6) {
+      // Если значения совпадают и длина паролей >= 6 символов, можно выполнить дополнительные действия
+      console.log('Пароли валидны');
+      // Например, можно разрешить отправку формы или выполнить другие действия
+    } else {
+      // Если значения не совпадают или длина паролей < 6 символов, добавляем класс с подсветкой ошибки на оба поля
+      console.log('Пароли не валидны');
+      passwordInput.classList.add('error');
+      twoPasswordInput.classList.add('error');
+    }
+  });
+</script>
+
+
+    <div class="container">
+        <h1 class="center-align">Регистрация</h1>
+        <form method="post" accept-charset="utf-8" action="/index/">
+            {% csrf_token %}
+
+ <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate">
+          <label for="first_name">Имя</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Фамилия</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" id="datepicker" class="datepicker">
+          <label for="datepicker">Дата рождения</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Пароль</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="two_password" type="password" class="validate">
+          <label for="two_password">Повторите пароль</label>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+              <div class="center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Регистрация</button>
+
+            </div>
+        </div>
+    </form>
+{% endblock %}
