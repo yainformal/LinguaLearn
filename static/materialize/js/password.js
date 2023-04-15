@@ -1,5 +1,4 @@
-
-  // Получаем ссылки на элементы input по их id
+ // Получаем ссылки на элементы input по их id
   var passwordInput = document.getElementById("password");
   var twoPasswordInput = document.getElementById("two_password");
 
