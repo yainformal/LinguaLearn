@@ -17,7 +17,7 @@ Including another URLconf
 #from django.contrib import admin
 from django.urls import path
 from . import views
-from .views import register
+from .views import customer_registered
 
 urlpatterns = {
     #path("admin/", admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = {
     path('index/', views.index),
     path('user_auth/', views.user_auth_view), # ссылка на страницу авторизации
     #path('authentication/', views.authentication)
-    path('register/', views.register)
+    path('register/', views.register),
+    path('register/customer_registered/',customer_registered, name = 'customer_registered')
 }
