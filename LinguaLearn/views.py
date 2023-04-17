@@ -2,6 +2,9 @@
 Система управления визуализацией 
 """
 import datetime
+
+from django.db import IntegrityError
+
 from .models import CustomUser
 from django.shortcuts import render, redirect
 from django.core.cache import cache
@@ -28,21 +31,35 @@ def register(request):
 
 def customer_registered(request):
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        birth_date = request.POST.get('birth_date')
-        format_birth_date = datetime.datetime.strptime(birth_date, '%d.%m.%Y').date()
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        try:
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            birth_date = request.POST.get('birth_date')
+            format_birth_date = datetime.datetime.strptime(birth_date, '%d.%m.%Y').date()
+            email = request.POST.get('email')
+            password = request.POST.get('password')
 
-        customer = CustomUser(
-            email=email,
-            password=password,
-            first_name=first_name,
-            last_name=last_name,
-            birth_date=format_birth_date
-        )
-        customer.save()
-        return render(request, "success.html")
+            customer = CustomUser(
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                birth_date=format_birth_date
+            )
+            customer.save()
+
+            customer = CustomUser.objects.get(email=email)
+            context = {
+                'CustomUser': customer
+            }
+
+            return render(request, "success.html", context)
+        except IntegrityError as e:
+            error_message = 'Ошибка: пользователь с таким e-mail существует'
+            return render(request, 'register.html', {'error_message': error_message})
     else:
         return render(request, 'error.html')
+
+
+def det_customer_pofile(request):
+    pass
