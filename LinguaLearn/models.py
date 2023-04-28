@@ -3,6 +3,7 @@
 """
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import datetime
 
 
 class CustomUser(models.Model):
@@ -20,6 +21,7 @@ class CustomUser(models.Model):
     birth_date = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     avatar = models.FileField(upload_to='avatars/', blank=True, null=True)
+    registration_date = models.DateTimeField(null=True, default=datetime.now())
 
     USERNAME_FIELD = 'email'
 
@@ -34,10 +36,7 @@ class Dictionary(models.Model):
     note_id = models.AutoField(primary_key=True)
     word = models.CharField(max_length=32, db_column='word')
     translate = models.CharField(max_length=256, db_column='translate')
-    add_date = models.DateTimeField(db_column='add_dttm')
-    customer_added = models.ForeignKey(CustomUser, on_delete=models.PROTECT, default=-1)
-    card_img = models.FileField(upload_to='cards/',blank=True, null=True)
-    speech = models.FileField(upload_to='speech/', blank=True, null=True)
+    add_date = models.DateTimeField(db_column='add_dttm', default=datetime.now(), null=True)
 
     class Meta:
         db_table = 'lingualearn_dictionary'
@@ -47,7 +46,7 @@ class CustomerSession(models.Model):
     session_id = models.CharField(max_length=64, unique=True)
     customer_id = models.ForeignKey(CustomUser, on_delete=models.PROTECT, default=-1)
     start_dttm = models.DateTimeField(null=False)
-    end_dttm = models.DateTimeField()
+    end_dttm = models.DateTimeField(default='31.12.5999')
 
     class Meta:
         db_table = 'lingualearn_customer_session'

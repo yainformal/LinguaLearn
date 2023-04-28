@@ -2,10 +2,12 @@
 Система управления визуализацией 
 """
 import datetime
+from django.utils import timezone
 
+from django.contrib import messages
 from django.db import IntegrityError
 
-from .models import CustomUser
+from .models import CustomUser, Dictionary
 from django.shortcuts import render, redirect
 from django.core.cache import cache
 from django.shortcuts import render
@@ -47,6 +49,7 @@ def customer_registered(request):
                 first_name=first_name,
                 last_name=last_name,
                 birth_date=format_birth_date
+
             )
             customer.save()
 
@@ -65,3 +68,33 @@ def customer_registered(request):
 
 def det_customer_pofile(request):
     pass
+
+
+def add_word(request):
+    return render(request, "add_word.html")
+
+
+def adding_word(request):
+    if request.method == 'POST':
+        try:
+            word = request.POST.get('input_word')
+            translate = request.POST.get('translate')
+
+            # создаем новый объект Dictionary с полученными данными и сохраняем его в базе данных
+            dictionary = Dictionary(
+                word=word,
+                translate=translate
+            )
+            dictionary.save()
+
+            # выводим сообщение об успехе и перенаправляем пользователя на страницу с формой добавления слова
+            #messages.success(request, 'Слово успешно добавлено в словарь!')
+            return render(request, 'add_word.html')
+
+        except IntegrityError:
+            # если возникает ошибка IntegrityError, то возвращаем пользователя на главную страницу
+            # можно также передать сообщение об ошибке с помощью messages.error()
+            return redirect('index')
+    else:
+        # если метод запроса не POST, то возвращаем страницу с ошибкой
+        return render(request, 'error.html')
