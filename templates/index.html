@@ -5,8 +5,9 @@
 
 {% block authlink %}
 <ul class="right hide-on-med-and-down">
-  class="
-        <li><a href="/user_auth/">Авторизация</a></li>  <!-- TODO: Изменить ссылку для авторизованного пользователя-->
+  <a id="logo-container_2" href="/user_auth/" class="brand-logo"> <!-- TODO: Изменить ссылку после подбора интересной-->
+        <img src="{% static 'img/key.png' %}" alt="Авторизация" width="62" height="55" style="margin-top: 5px;"/>
+        </a>
       </ul>
  {% endblock %}
 
@@ -39,7 +40,7 @@
       <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
-            <a href="/add_word/">   <!-- TODO: Изменить ссылку для авторизованного пользователя-->
+            <a href="/dictionary_fill/">   <!-- TODO: Изменить ссылку для авторизованного пользователя-->
             <h2 class="center brown-text"><i class="material-icons">bookmark</i></h2>
               </a>
             <h5 class="center">Cловарь</h5>
