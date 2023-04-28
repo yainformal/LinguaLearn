@@ -88,8 +88,8 @@ def adding_word(request):
             dictionary.save()
 
             # выводим сообщение об успехе и перенаправляем пользователя на страницу с формой добавления слова
-            #messages.success(request, 'Слово успешно добавлено в словарь!')
-            return render(request, 'add_word.html')
+            messages.success(request, 'Слово успешно добавлено в словарь!')
+            return dictionary_fill(request)
 
         except IntegrityError:
             # если возникает ошибка IntegrityError, то возвращаем пользователя на главную страницу
@@ -98,3 +98,12 @@ def adding_word(request):
     else:
         # если метод запроса не POST, то возвращаем страницу с ошибкой
         return render(request, 'error.html')
+
+
+def dictionary_fill(request):
+    words = Dictionary.objects.all()
+    context = {'words': words}
+    return render(request, 'dictionary.html', context)
+
+
+

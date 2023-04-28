@@ -1,0 +1,36 @@
+{% extends 'base_page.html' %}
+{% load static %}
+{% block pagetitle %} Словарь для изучения {% endblock %}
+
+{% block content %}
+
+<div class="container" id='dictionary'>
+    <h4 class="center-align">Словарь</h4>
+        {% csrf_token %}
+        <div>
+            <a href="/add_word/" name="add_btn" class="btn-floating btn-large waves-effect waves-light "><i class="material-icons right">add</i>
+                <span class="btn-label">Добавить слово</span>
+            </a>
+        </div>
+
+<table class="centered">
+    <thead>
+        <tr>
+            <th>Слово</th>
+            <th>Перевод</th>
+            <!-- и т.д. -->
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for word in words %}
+            <tr>
+                <td>{{ word.word }}</td>
+                <td>{{ word.translate }}</td>
+                <!-- и т.д. -->
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
