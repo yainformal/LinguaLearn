@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password
 
 
@@ -106,4 +106,14 @@ def dictionary_fill(request):
     return render(request, 'dictionary.html', context)
 
 
+def edit_word(request, note_id):
+    word = get_object_or_404(Dictionary, note_id=note_id)
+    if request.method == 'POST':
+        word.word = request.POST['word']
+        word.translate = request.POST['translate']
+        word.save()
+        messages.success(request, 'Слово успешно изменено')
 
+        return dictionary_fill(request)
+    else:
+        return render(request, 'edit_word.html', {'word': word})

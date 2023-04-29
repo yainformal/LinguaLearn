@@ -1,0 +1,21 @@
+{% extends 'base_page.html' %}
+
+{% block pagetitle %}Редактирование слова{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h4>Редактирование слова "{{ word.word }}"</h4>
+    <form method="POST" accept-charset="utf-8">
+        {% csrf_token %}
+        <div class="input-field">
+            <input type="text" name="word" id="word" value="{{ word.word }}" required>
+            <label for="word">Слово</label>
+        </div>
+        <div class="input-field">
+            <textarea name="translate" id="translate" class="materialize-textarea" required>{{ word.translate }}</textarea>
+            <label for="translate">Перевод</label>
+        </div>
+        <button type="submit" class="btn">Сохранить</button>
+    </form>
+</div>
+{% endblock %}
