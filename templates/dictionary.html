@@ -16,8 +16,10 @@
 <table class="centered">
     <thead>
         <tr>
-            <th>Слово</th>
+            <th style="width: 20%;">Слово</th>
             <th>Перевод</th>
+            <th style="width: 2%;"></th>
+            <th style="width: 2%;"></th>
             <!-- и т.д. -->
         </tr>
     </thead>
@@ -27,6 +29,8 @@
             <tr>
                 <td>{{ word.word }}</td>
                 <td>{{ word.translate }}</td>
+                <td><a href="#"><i class="material-icons">edit</i></a></td>
+                <td><a href="#"><i class="material-icons ">delete</i></a></td>
                 <!-- и т.д. -->
             </tr>
         {% endfor %}
