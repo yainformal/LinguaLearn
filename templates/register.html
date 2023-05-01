@@ -19,17 +19,17 @@
     <div class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input id="first_name" type="text" class="validate" name="first_name" required>
+          <input id="first_name" type="text" class="validate" name="first_name" value="{{ first_name }}" required>
           <label for="first_name">Имя</label>
         </div>
         <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate" name="last_name" required>
+          <input id="last_name" type="text" class="validate" name="last_name" value="{{ last_name }}" required>
           <label for="last_name">Фамилия</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input type="text" id="datepicker" class="datepicker" name="birth_date">
+          <input type="text" id="datepicker" class="datepicker" name="birth_date" value="{{ birth_date }}">
           <label for="datepicker">Дата рождения</label>
         </div>
       </div>
@@ -51,7 +51,7 @@
 
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate", name="email" required>
+          <input id="email" type="email" class="validate", name="email" value="{{email}}" required>
           <label for="email">Email</label>
             <p>{{ error_message }}</p>
         </div>

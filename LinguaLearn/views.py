@@ -61,7 +61,14 @@ def customer_registered(request):
             return render(request, "success.html", context)
         except IntegrityError as e:
             error_message = 'Ошибка: пользователь с таким e-mail существует'
-            return render(request, 'register.html', {'error_message': error_message})
+            context = {
+                'error_message': error_message,
+                'email': email,
+                'first_name': first_name,
+                'last_name': last_name,
+                'birth_date': birth_date
+            }
+            return render(request, 'register.html', context)
     else:
         return render(request, 'error.html')
 
