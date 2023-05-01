@@ -28,7 +28,7 @@ urlpatterns = {
     path('register/', views.register),
     path('register/customer_registered/', customer_registered, name='customer_registered'),
     path('add_word/', views.add_word),
-    path('add_word/adding_word/', adding_word, name='add_word'),
+    path('adding_word/', adding_word, name='add_word'),
     path('dictionary_fill/', views.dictionary_fill, name='dictionary'),
     path('edit_word/<int:note_id>/', views.edit_word, name='edit_word'),
     path('delete_word/<int:note_id>/', views.delete_word, name='delete_word')
