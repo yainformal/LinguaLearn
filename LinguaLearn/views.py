@@ -117,3 +117,12 @@ def edit_word(request, note_id):
         return dictionary_fill(request)
     else:
         return render(request, 'edit_word.html', {'word': word})
+
+
+def delete_word(request, note_id):
+    word = get_object_or_404(Dictionary, note_id=note_id)
+    word.delete()
+    word.save()
+    messages.success(request, 'Слово успешно удалено')
+    return dictionary_fill(request)
+
