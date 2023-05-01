@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = secret_django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = DEBUG_PARAM
+DEBUG = True
 
 ALLOWED_HOSTS = ['LinguaLearn', '127.0.0.1']
 
