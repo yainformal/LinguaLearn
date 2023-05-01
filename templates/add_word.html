@@ -14,14 +14,14 @@
         {% csrf_token %}
 
 <div class="input-field col s6">
-    <input id="input_word" name="input_word" type="text" data-length="50" required>
+    <input id="input_word" name="input_word" type="text" data-length="50" value="{{ word|default:''}}" required>
     <label for="input_word">Слово</label>
     <p>{{ error_message }}</p>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="translate" name="translate" class="materialize-textarea" data-length="256"></textarea>
-            <label for="translate">Перевод и значение</label>
+            <textarea id="input_translate" name="input_translate" class="materialize-textarea" data-length="256" required>{{ translate }}</textarea>
+            <label for="input_translate">Перевод и значение</label>
           </div>
         </div>
         <div class="center-align">

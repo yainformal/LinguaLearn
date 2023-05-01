@@ -78,7 +78,7 @@ def adding_word(request):
     if request.method == 'POST':
         try:
             word = request.POST.get('input_word')
-            translate = request.POST.get('translate')
+            translate = request.POST.get('input_translate')
 
             # создаем новый объект Dictionary с полученными данными и сохраняем его в базе данных
             dictionary = Dictionary(
@@ -86,15 +86,19 @@ def adding_word(request):
                 translate=translate
             )
             dictionary.save()
-
+            
             # выводим сообщение об успехе и перенаправляем пользователя на страницу с формой добавления слова
             messages.success(request, 'Слово успешно добавлено в словарь!')
             return dictionary_fill(request)
 
         except IntegrityError as e:
             error_message = 'Ошибка: слово уже есть в словаре'
-            # можно также передать сообщение об ошибке с помощью messages.error()
-            return render(request, 'add_word.html', {'error_message': error_message})
+            context = {
+                'error_message': error_message,
+                'word': word,
+                'translate': translate
+            }
+            return render(request, 'add_word.html', context)
     else:
         # если метод запроса не POST, то возвращаем страницу с ошибкой
         return render(request, 'error.html')
@@ -118,7 +122,8 @@ def edit_word(request, note_id):
 
         except IntegrityError as e:
             error_message = 'Ошибка: слово уже есть в словаре'
-            return render(request, 'edit_word.html', {'error_message': error_message})
+            context = {'word': word,'error_message': error_message}
+            return render(request, 'edit_word.html',context)
     else:
         return render(request, 'edit_word.html', {'word': word})
 
