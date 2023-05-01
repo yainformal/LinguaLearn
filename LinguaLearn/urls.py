@@ -32,5 +32,6 @@ urlpatterns = {
     path('dictionary_fill/', views.dictionary_fill, name='dictionary'),
     path('edit_word/<int:note_id>/', views.edit_word, name='edit_word'),
     path('delete_word/<int:note_id>/', views.delete_word, name='delete_word'),
-    path('validate_password/', views.validate_password, name='validate_password')
+    path('validate_password/', views.validate_password, name='validate_password'),
+    path('log_out/<int:customer_id>/', views.log_out, name='log_out')
 }

@@ -156,15 +156,13 @@ def validate_password(request):
             if check_password(password, hashed_password):
                 try:
                     user = CustomUser.objects.get(email=email)
-                    print((active_session(user.customer_id)))
-                    if active_session(user.customer_id) >= 1:
-                        pass
-                    else:
+                    if active_session(user.customer_id) == 0:
                         session_id = hashlib.sha256(
                             (str(user.customer_id) + str(datetime.datetime.now())).encode('utf-8')).hexdigest()
                         session = CustomerSession(customer_id=user.customer_id, session_id=session_id,
                                                   start_dttm=datetime.datetime.now())
                         session.save()
+
 
                 except Exception as e:
                     print('Ошибка при создании сессии:', e)
@@ -185,11 +183,31 @@ def validate_password(request):
 def active_session(customer_id):
     try:
         session = CustomerSession.objects.get(customer_id=customer_id)
+        print(session.end_dttm)
         if str(session.end_dttm) == '5999-12-30 21:00:00+00:00':
             return True
         else:
             return False
-    except CustomerSession.DoesNotExist:
-        session = False
-        return session
-    
+    except:
+        return False
+
+
+def log_out(request, customer_id):
+    try:
+        if request.method == 'POST':
+            session = CustomerSession.objects.filter( customer_id=customer_id, end_dttm='5999-12-30 21:00:00+00:00').first()
+            end_session = datetime.datetime.now()
+            session.end_dttm = end_session
+            session.save()
+            return render(request, 'index.html')
+    except ValueError as e:
+        print('Jibmrf',e)
+        pass
+
+    else:
+        error_message = 'Упс, что-то пошло не так'
+        context = {
+            'error_message': error_message,
+            'last_name': CustomUser.last_name
+        }
+        return render(request, 'profile.html', context)
