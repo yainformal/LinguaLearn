@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
+from django.contrib.auth.hashers import check_password
+from  django.contrib.auth import authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password
 
@@ -93,7 +95,7 @@ def adding_word(request):
                 translate=translate
             )
             dictionary.save()
-            
+
             # выводим сообщение об успехе и перенаправляем пользователя на страницу с формой добавления слова
             messages.success(request, 'Слово успешно добавлено в словарь!')
             return dictionary_fill(request)
@@ -129,8 +131,8 @@ def edit_word(request, note_id):
 
         except IntegrityError as e:
             error_message = 'Ошибка: слово уже есть в словаре'
-            context = {'word': word,'error_message': error_message}
-            return render(request, 'edit_word.html',context)
+            context = {'word': word, 'error_message': error_message}
+            return render(request, 'edit_word.html', context)
     else:
         return render(request, 'edit_word.html', {'word': word})
 
@@ -140,3 +142,24 @@ def delete_word(request, note_id):
     word.delete()
     messages.success(request, 'Слово успешно удалено')
     return dictionary_fill(request)
+
+
+def validate_password(request):
+    if request.method == 'POST':
+        try:
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            user = get_object_or_404(CustomUser, email=email)
+            hashed_password = user.password
+            if check_password(password, hashed_password):
+                context = {
+                    'CustomUser': user
+                }
+                return render(request, "success.html", context)
+            else:
+                error_message = 'Ошибка: не верный логин или пароль'
+                context = {'error_message': error_message}
+                return render(request, 'auth.html', context)
+
+        except:
+            return render(request, 'index.html')

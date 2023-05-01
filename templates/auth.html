@@ -3,12 +3,13 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="center-align">Авторизация</h1>
-        <form method="post" accept-charset="utf-8" action="/authentication/">
+        <h4 class="center-align">Авторизация</h4>
+        <form method="post" accept-charset="utf-8" action="/validate_password/">
             {% csrf_token %}
+            <p>{{ error_message }}</p>
             <div class="input-field">
-                <input type="text" name="username" id="username" required>
-                <label for="username">Имя пользователя</label>
+                <input type="text" name="email" id="email" required>
+                <label for="email">Имя пользователя</label>
             </div>
             <div class="input-field">
                 <input type="password" name="password" id="password" required>

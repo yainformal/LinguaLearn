@@ -31,5 +31,6 @@ urlpatterns = {
     path('adding_word/', adding_word, name='add_word'),
     path('dictionary_fill/', views.dictionary_fill, name='dictionary'),
     path('edit_word/<int:note_id>/', views.edit_word, name='edit_word'),
-    path('delete_word/<int:note_id>/', views.delete_word, name='delete_word')
+    path('delete_word/<int:note_id>/', views.delete_word, name='delete_word'),
+    path('validate_password/', views.validate_password, name='validate_password')
 }
