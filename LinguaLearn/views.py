@@ -2,12 +2,13 @@
 Система управления визуализацией 
 """
 import datetime
+import hashlib
 from django.utils import timezone
 
 from django.contrib import messages
 from django.db import IntegrityError
 
-from .models import CustomUser, Dictionary
+from .models import CustomUser, Dictionary, CustomerSession
 from django.shortcuts import render, redirect
 from django.core.cache import cache
 from django.shortcuts import render
@@ -17,7 +18,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
-from  django.contrib.auth import authenticate
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import make_password
 
@@ -151,7 +152,23 @@ def validate_password(request):
             password = request.POST.get('password')
             user = get_object_or_404(CustomUser, email=email)
             hashed_password = user.password
+
             if check_password(password, hashed_password):
+                try:
+                    user = CustomUser.objects.get(email=email)
+                    print((active_session(user.customer_id)))
+                    if active_session(user.customer_id) >= 1:
+                        pass
+                    else:
+                        session_id = hashlib.sha256(
+                            (str(user.customer_id) + str(datetime.datetime.now())).encode('utf-8')).hexdigest()
+                        session = CustomerSession(customer_id=user.customer_id, session_id=session_id,
+                                                  start_dttm=datetime.datetime.now())
+                        session.save()
+
+                except Exception as e:
+                    print('Ошибка при создании сессии:', e)
+
                 context = {
                     'CustomUser': user
                 }
@@ -163,3 +180,16 @@ def validate_password(request):
 
         except:
             return render(request, 'index.html')
+
+
+def active_session(customer_id):
+    try:
+        session = CustomerSession.objects.get(customer_id=customer_id)
+        if str(session.end_dttm) == '5999-12-30 21:00:00+00:00':
+            return True
+        else:
+            return False
+    except CustomerSession.DoesNotExist:
+        session = False
+        return session
+    

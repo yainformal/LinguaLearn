@@ -2,7 +2,6 @@
 Файл содержащий описание моделей приложения
 """
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 
 
@@ -44,9 +43,9 @@ class Dictionary(models.Model):
 
 class CustomerSession(models.Model):
     session_id = models.CharField(max_length=64, unique=True)
-    customer_id = models.ForeignKey(CustomUser, on_delete=models.PROTECT, default=-1)
+    customer = models.ForeignKey(CustomUser, on_delete=models.PROTECT, default=-1)
     start_dttm = models.DateTimeField(null=False)
-    end_dttm = models.DateTimeField(default='31.12.5999')
+    end_dttm = models.DateTimeField(default='5999-12-31 00:00:00')
 
     class Meta:
         db_table = 'lingualearn_customer_session'
