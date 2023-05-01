@@ -91,10 +91,10 @@ def adding_word(request):
             messages.success(request, 'Слово успешно добавлено в словарь!')
             return dictionary_fill(request)
 
-        except IntegrityError:
-            # если возникает ошибка IntegrityError, то возвращаем пользователя на главную страницу
+        except IntegrityError as e:
+            error_message = 'Ошибка: слово уже есть в словаре'
             # можно также передать сообщение об ошибке с помощью messages.error()
-            return redirect('index')
+            return render(request, 'add_word.html', {'error_message': error_message})
     else:
         # если метод запроса не POST, то возвращаем страницу с ошибкой
         return render(request, 'error.html')
@@ -109,12 +109,16 @@ def dictionary_fill(request):
 def edit_word(request, note_id):
     word = get_object_or_404(Dictionary, note_id=note_id)
     if request.method == 'POST':
-        word.word = request.POST['word']
-        word.translate = request.POST['translate']
-        word.save()
-        messages.success(request, 'Слово успешно изменено')
+        try:
+            word.word = request.POST['word']
+            word.translate = request.POST['translate']
+            word.save()
+            messages.success(request, 'Слово успешно изменено')
+            return dictionary_fill(request)
 
-        return dictionary_fill(request)
+        except IntegrityError as e:
+            error_message = 'Ошибка: слово уже есть в словаре'
+            return render(request, 'edit_word.html', {'error_message': error_message})
     else:
         return render(request, 'edit_word.html', {'word': word})
 
@@ -125,4 +129,3 @@ def delete_word(request, note_id):
     word.save()
     messages.success(request, 'Слово успешно удалено')
     return dictionary_fill(request)
-

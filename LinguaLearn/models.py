@@ -34,7 +34,7 @@ class Dictionary(models.Model):
     Модель словаря пользователя
     """
     note_id = models.AutoField(primary_key=True)
-    word = models.CharField(max_length=32, db_column='word')
+    word = models.CharField(max_length=32, db_column='word', unique=True)
     translate = models.CharField(max_length=256, db_column='translate')
     add_date = models.DateTimeField(db_column='add_dttm', default=datetime.now(), null=True)
 

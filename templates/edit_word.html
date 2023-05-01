@@ -10,6 +10,7 @@
         <div class="input-field">
             <input type="text" name="word" id="word" value="{{ word.word }}" required>
             <label for="word">Слово</label>
+            <p>{{ error_message }}</p>
         </div>
         <div class="input-field">
             <textarea name="translate" id="translate" class="materialize-textarea" required>{{ word.translate }}</textarea>
