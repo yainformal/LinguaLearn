@@ -1,0 +1,50 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block pagetitle %} Профиль {% endblock %}
+
+{% block authlink %}
+<ul class="right hide-on-med-and-down">
+  <li>
+    <a href="#">
+      <div class="user-avatar">
+        <img src="{{ CustomUser.avatar }}" alt="User Avatar">
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ CustomUser.first_name }} {{ CustomUser.last_name }}</span>
+        <span class="user-role">Administrator</span>
+      </div>
+    </a>
+  </li>
+  <!-- TODO: Изменить ссылку для авторизованного пользователя-->
+</ul>
+{% endblock %}
+
+ <style>
+     .user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: auto;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.user-role {
+  font-size: 14px;
+  color: #666;
+  display: block;
+}
+
+ </style>

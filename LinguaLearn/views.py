@@ -155,7 +155,7 @@ def validate_password(request):
                 context = {
                     'CustomUser': user
                 }
-                return render(request, "success.html", context)
+                return render(request, "profile.html", context)
             else:
                 error_message = 'Ошибка: не верный логин или пароль'
                 context = {'error_message': error_message}

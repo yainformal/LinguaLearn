@@ -3,9 +3,15 @@
 
 {% block pagetitle %} Профиль {% endblock %}
 
+{% block authlink %}
+<ul class="right hide-on-med-and-down">
+        <li><a href="#">{{ CustomUser.first_name }} {{ CustomUser.last_name }}</a></li>  <!-- TODO: Изменить ссылку для авторизованного пользователя-->
+      </ul>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-        <h1 class="center-align" style="font-size: 18px;">Добро пожаловать, {{ CustomUser.first_name }} </h1>
+        <h1 class="center-align" style="font-size: 18px;">Добрый день {{ CustomUser.first_name }} </h1>
         <div class="row">
             <div class="col s12">
                 <ul class="collection">
@@ -17,6 +23,6 @@
                 </ul>
             </div>
         </div>
-        <p class="center-align">Спасибо за регистрацию на нашем веб-сайте!</p>
+        <p class="center-align"></p>
     </div>
 {% endblock %}
