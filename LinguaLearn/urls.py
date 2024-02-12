@@ -33,5 +33,6 @@ urlpatterns = {
     path('edit_word/<int:note_id>/', views.edit_word, name='edit_word'),
     path('delete_word/<int:note_id>/', views.delete_word, name='delete_word'),
     path('validate_password/', views.validate_password, name='validate_password'),
-    path('log_out/<int:customer_id>/', views.log_out, name='log_out')
+    path('log_out/<int:customer_id>/', views.log_out, name='log_out'),
+    path('bot_page/', views.get_chat_bot, name='chat_bot')
 }

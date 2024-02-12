@@ -1,0 +1,42 @@
+{% extends 'base_page.html' %}
+{% load static %}
+{% block pagetitle %} Общение с ботом {% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'materialize/css/chat_style.css' %}">
+
+    <div class="container" id='chatbot'>
+        <div class="bubble-container">
+      <div class="text-container">
+        <div class="bubble-text">
+          Чем могу вам помочь?
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-container" id="chat-messages">
+        {% for message in chat_messages %}
+            {% if message.sender == 'user' %}
+                <div class="user-message">{{ message.text }}</div>
+            {% elif message.sender == 'bot' %}
+                <div class="bot-message">{{ message.text }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <form id="message-form">
+        <div class="input-field col s12">
+            <input id="user_message" name="user_message" type="text" required>
+            <label for="user_message">Введите сообщение</label>
+        </div>
+        <div class="row">
+            <div class="center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Отправить
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="{% static 'materialize/js/chat.js'%}"></script>
+
+{% endblock %}

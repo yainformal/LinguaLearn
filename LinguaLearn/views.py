@@ -79,8 +79,12 @@ def customer_registered(request):
 def det_customer_pofile(request):
     pass
 
+def get_chat_bot(request):
+
+    return render(request,"chat_form.html") # TODO функция для открытия страницы с ботом
 
 def add_word(request):
+
     return render(request, "add_word.html")
 
 
