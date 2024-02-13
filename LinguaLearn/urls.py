@@ -18,6 +18,7 @@ Including another URLconf
 from django.urls import path
 from . import views
 from .views import customer_registered, adding_word
+from django.urls import include
 
 urlpatterns = {
     # path("admin/", admin.site.urls),
@@ -34,5 +35,5 @@ urlpatterns = {
     path('delete_word/<int:note_id>/', views.delete_word, name='delete_word'),
     path('validate_password/', views.validate_password, name='validate_password'),
     path('log_out/<int:customer_id>/', views.log_out, name='log_out'),
-    path('bot_page/', views.get_chat_bot, name='chat_bot')
+    path('bot_page/', views.get_chat_bot, name='chat_bot'),
 }

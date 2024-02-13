@@ -19,6 +19,8 @@ django-webpack-loader = "^1.8.1"
 # Добавление Materialize в качестве зависимости
 # Materialize можно загрузить с официального сайта и разместить в каталоге статических файлов (static)
 pillow = "^9.5.0"
+channels = "^4.0.0"
+daphne = "^4.1.0"
 
 
 [build-system]

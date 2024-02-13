@@ -27,7 +27,7 @@ SECRET_KEY = secret_django_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['LinguaLearn', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'LinguaLearn', '127.0.0.1']
 
 # Application definition
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "PIL",
+    "channels",
     'crispy_forms',
 
 ]
@@ -75,6 +76,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "LinguaLearn.wsgi.application"
+
+ASGI_APPLICATION = 'LinguaLearn.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

@@ -1,5 +1,5 @@
-// chat.js
-const chatSocket = new WebSocket('{{ websocket_url }}');
+// Инициализация WebSocket соединения
+//const chatSocket = new WebSocket('ws://localhost:8000/ws/chat/');
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
@@ -13,11 +13,16 @@ chatSocket.onmessage = function(e) {
 };
 
 function sendMessageToBot(message) {
-    chatSocket.send(JSON.stringify({
-        'message': message,
-        'sender': 'user'
-    }));
+    if (chatSocket.readyState === WebSocket.OPEN) {
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'sender': 'user'
+        }));
+    } else {
+        console.error("WebSocket соединение не открыто.");
+    }
 }
+
 
 function addUserMessage(message) {
     const chatMessages = document.getElementById('chat-messages');
@@ -25,6 +30,7 @@ function addUserMessage(message) {
     messageDiv.classList.add('user-message');
     messageDiv.textContent = message;
     chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Автопрокрутка к последнему сообщению
 }
 
 function addBotMessage(message) {
@@ -33,13 +39,16 @@ function addBotMessage(message) {
     messageDiv.classList.add('bot-message');
     messageDiv.textContent = message;
     chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Автопрокрутка к последнему сообщению
 }
 
 document.getElementById('message-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const userMessageInput = document.getElementById('user_message');
-    const userMessage = userMessageInput.value;
-    userMessageInput.value = '';
-    addUserMessage(userMessage);
-    sendMessageToBot(userMessage);
+    const userMessage = userMessageInput.value.trim(); // Удаление лишних пробелов
+    if (userMessage !== '') { // Проверка на пустое сообщение
+        addUserMessage(userMessage);
+        sendMessageToBot(userMessage);
+        userMessageInput.value = ''; // Очистка поля ввода после отправки
+    }
 });

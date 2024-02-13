@@ -3,6 +3,8 @@
 """
 import datetime
 import hashlib
+from urllib.request import localhost
+
 from django.utils import timezone
 
 from django.contrib import messages
@@ -81,7 +83,12 @@ def det_customer_pofile(request):
 
 def get_chat_bot(request):
 
-    return render(request,"chat_form.html") # TODO функция для открытия страницы с ботом
+    scheme = 'ws'
+    # Получение текущего хоста из запроса
+    host = "localhost:8001" #request.get_host()
+    websocket_url = f'{scheme}://{host}/ws/chat/'
+    context = {'websocket_url': websocket_url}
+    return render(request,"chat_form.html", context) # TODO функция для открытия страницы с ботом
 
 def add_word(request):
 

@@ -1,6 +1,11 @@
 # LinguaLearn
 Учебный проект: Сайт об изучении иностранных языков 
 
+Инструкции для запуска сервиса в WS
+
+1. Consumer -- daphne -p 8001 LinguaLearn.asgi:application
+2. Приложение  python manage.py runserver
+
 ## Первоначальные требования к проекту 
 
 ### Описание

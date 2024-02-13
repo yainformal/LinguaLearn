@@ -37,6 +37,10 @@
     </form>
 </div>
 
+<script type="text/javascript">
+    var websocket_url = "{{ websocket_url }}";
+    const chatSocket = new WebSocket(websocket_url);
+</script>
 <script src="{% static 'materialize/js/chat.js'%}"></script>
 
 {% endblock %}
