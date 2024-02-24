@@ -222,3 +222,6 @@ def log_out(request, customer_id):
             'last_name': CustomUser.last_name
         }
         return render(request, 'profile.html', context)
+
+
+

@@ -1,0 +1,29 @@
+# Используйте официальный образ Python как базовый образ
+FROM python:3.11.2
+
+# Установите рабочую директорию в контейнере
+WORKDIR /app
+
+# Установите необходимые пакеты и библиотеки
+# Это может включать системные библиотеки, необходимые для вашего приложения
+# Пример: RUN apt-get update && apt-get install -y libpq-dev
+
+# Скопируйте файл зависимостей в контейнер
+COPY requirements.txt .
+
+# Установите зависимости Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Если вы используете Poetry
+COPY pyproject.toml poetry.lock* /app/
+RUN pip install poetry && poetry config virtualenvs.create false && poetry install
+
+# Скопируйте остальные файлы проекта в контейнер
+COPY . .
+
+# Сделайте порты доступными снаружи контейнера
+EXPOSE 8000
+EXPOSE 8001
+
+# Определите команду по умолчанию
+CMD ["python", "manage.py", "runserver"]

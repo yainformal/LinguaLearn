@@ -1,0 +1,75 @@
+#chat-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    overflow-y: scroll;
+    background: linear-gradient(to right, #30A0F9, #1F78E2); /* Градиентный фон */
+}
+
+.eye {
+    position: absolute;
+    width: 95px; /* Размер глаза */
+    height: 150px;
+    left: 82px;
+    background: #F6F7FA;
+    border-radius: 50%;
+}
+
+.pupil {
+    position: absolute;
+    width: 40px; /* Размер зрачка */
+    height: 56px;
+    background: linear-gradient(to right, #04b8a6,#04d4bf);
+    border-radius: 50%;
+    left: 30px; /* Позиция зрачка в центре глаза */
+    right: 30px;
+    top: 50px;
+    pointer-events: none; /* Игнорировать события мыши */
+}
+
+.pupil::before {
+    content: "";
+    position: absolute;
+    width: 22px; /* Размер черного кружка */
+    height: 34px;
+    background-color: #2B313B; /* Черный цвет */
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#message-form {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Прозрачный фон формы */
+}
+
+#user_message {
+    width: calc(100% - 80px);
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    width: 60px;
+    padding: 5px;
+    background-color: #30A0F9;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1F78E2;
+}
+
+#chat-messages {
+    padding: 10px;
+}

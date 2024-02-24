@@ -1,8 +1,10 @@
 """
 Файл содержащий описание моделей приложения
 """
+import pickle
 from django.db import models
 from datetime import datetime
+
 
 
 class CustomUser(models.Model):
@@ -49,3 +51,43 @@ class CustomerSession(models.Model):
 
     class Meta:
         db_table = 'lingualearn_customer_session'
+
+
+class QAHouset(models.Model):
+    questions = models.TextField(null=True, blank=True)
+    answers = models.TextField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'lingualearn_QA_House'
+
+#TODO: модель данных реализована,однако проект реализован на локальных данны без обращения к базе данных
+class QuestionEmbedding(models.Model):
+    qa_house = models.OneToOneField(QAHouset, on_delete=models.CASCADE, related_name='question_embedding')
+    embedding = models.BinaryField()
+
+    def set_embedding(self, numpy_array):
+        self.embedding = pickle.dumps(numpy_array)
+
+    def get_embedding(self):
+        return pickle.loads(self.embedding)
+
+    class Meta:
+        db_table = 'lingualearn_QE_House'
+
+
+class AnswerEmbedding(models.Model):
+    qa_house = models.OneToOneField(QAHouset, on_delete=models.CASCADE, related_name='answer_embedding')
+    embedding = models.BinaryField()
+
+    def set_embedding(self, numpy_array):
+        self.embedding = pickle.dumps(numpy_array)
+
+    def get_embedding(self):
+        return pickle.loads(self.embedding)
+
+    class Meta:
+        db_table = 'lingualearn_AE_House'
+
+
+
+

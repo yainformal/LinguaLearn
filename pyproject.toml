@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lingualearn"
-version = "0.1.0"
+version = "2.1.0"
 description = ""
 authors = ["Mikail Gubanov <yainformal@ya.ru>"]
 readme = "README.md"
@@ -13,6 +13,19 @@ pylint = "^2.17.2"
 flake8 = "^6.0.0"
 django = "^4.2"
 readme-md = "^2019.1.28"
+django-crispy-forms = "^2.0"
+django-debug-toolbar = "^4.0.0"
+django-webpack-loader = "^1.8.1"
+# Добавление Materialize в качестве зависимости
+# Materialize можно загрузить с официального сайта и разместить в каталоге статических файлов (static)
+pillow = "^9.5.0"
+channels = "^4.0.0"
+daphne = "^4.1.0"
+httpx = "^0.26.0"
+transformers = "^4.38.1"
+torch = "^2.2.1"
+scipy = "^1.12.0"
+datasets = "^2.17.1"
 
 
 [build-system]

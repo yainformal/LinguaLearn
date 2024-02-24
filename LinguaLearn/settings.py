@@ -26,8 +26,8 @@ SECRET_KEY = secret_django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', 'LinguaLearn', '127.0.0.1']
+API_BASE_URL = 'http://127.0.0.1:8000/'
+ALLOWED_HOSTS = ['localhost', 'LinguaLearn', '127.0.0.1', '*']
 
 # Application definition
 
@@ -144,5 +144,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
+
+        'LinguaLearn': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
     },
 }
+

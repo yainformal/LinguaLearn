@@ -16,7 +16,9 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path
-from . import views
+
+from utils import feature
+from . import views, api
 from .views import customer_registered, adding_word
 from django.urls import include
 
@@ -36,4 +38,5 @@ urlpatterns = {
     path('validate_password/', views.validate_password, name='validate_password'),
     path('log_out/<int:customer_id>/', views.log_out, name='log_out'),
     path('bot_page/', views.get_chat_bot, name='chat_bot'),
+    path('api/response-lookup/', api.ResponseLookupView.as_view(), name='response-lookup'),
 }

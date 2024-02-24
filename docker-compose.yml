@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  daphne:
+    build:
+      context: .
+      dockerfile: Dockerfile-duphne
+    command: daphne -p 8001 LinguaLearn.asgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8001"
+    networks:
+      - LinguaLearn_network
+    environment:
+      - DJANGO_SETTINGS_MODULE=LinguaLearn.settings
+
+  django_runserver:
+    build:
+      context: .
+      dockerfile: Dockerfile-Django
+    command: '/bin/sh -c "python manage.py makemigrations LinguaLearn && python manage.py migrate LinguaLearn && python manage.py runserver 0.0.0.0:8000"'
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - LinguaLearn_network
+    environment:
+      - DJANGO_SETTINGS_MODULE=LinguaLearn.settings
+
+networks:
+  LinguaLearn_network:
+    driver: bridge

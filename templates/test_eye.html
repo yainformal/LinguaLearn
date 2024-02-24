@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Движущиеся Зрачки</title>
+<style>
+  .eye {
+    position: absolute;
+    width: 95px; /* размер глаза */
+    height: 150px;
+    left: 82px;
+    background: #F6F7FA;
+    border-radius: 50%;
+
+  }
+
+  .pupil {
+    position: absolute;
+    width: 40px; /* размер зрачка */
+    height: 56px;
+    background: linear-gradient(to right, #04b8a6,#04d4bf);
+    border-radius: 50%;
+    left: 30px; /* позиция зрачка в центре глаза */
+    right: 30px;
+    top: 50px;
+    pointer-events: none; /* игнорировать события мыши */
+  }
+
+.pupil::before {
+    content: "";
+    position: absolute;
+    width: 22px; /* размер черного кружка */
+    height: 34px;
+    background-color: #2B313B; /* черный цвет */
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="eye" style="left:50px; top:50px;">
+  <div class="pupil" id="leftPupil"></div>
+</div>
+
+<div class="eye" style="left:200px; top:50px;">
+  <div class="pupil" id="rightPupil"></div>
+</div>
+
+<script>
+  document.addEventListener('mousemove', (event) => {
+    const { clientX: mouseX, clientY: mouseY } = event;
+
+    document.querySelectorAll('.pupil').forEach((pupil) => {
+      // Получить координаты глаза относительно страницы
+      const eyeRect = pupil.parentElement.getBoundingClientRect();
+
+      // Вычислить разницу между центром глаза и положением мыши
+      const deltaX = mouseX - (eyeRect.left + eyeRect.width / 2);
+      const deltaY = mouseY - (eyeRect.top + eyeRect.height / 2);
+
+      // Вычислить угол и расстояние от центра глаза до мыши
+      const angle = Math.atan2(deltaY, deltaX);
+      const distance = Math.min(eyeRect.width / 4, Math.sqrt(deltaX * deltaX + deltaY * deltaY));
+
+      // Установить новую позицию зрачка
+      const pupilX = distance * Math.cos(angle);
+      const pupilY = distance * Math.sin(angle);
+      pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+    });
+  });
+</script>
+
+</body>
+</html>

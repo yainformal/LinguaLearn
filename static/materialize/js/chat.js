@@ -52,3 +52,26 @@ document.getElementById('message-form').addEventListener('submit', function(e) {
         userMessageInput.value = ''; // Очистка поля ввода после отправки
     }
 });
+
+
+document.addEventListener('mousemove', (event) => {
+    const { clientX: mouseX, clientY: mouseY } = event;
+
+    document.querySelectorAll('.pupil').forEach((pupil) => {
+        // Получить координаты глаза относительно страницы
+        const eyeRect = pupil.parentElement.getBoundingClientRect();
+
+        // Вычислить разницу между центром глаза и положением мыши
+        const deltaX = mouseX - (eyeRect.left + eyeRect.width / 2);
+        const deltaY = mouseY - (eyeRect.top + eyeRect.height / 2);
+
+        // Вычислить угол и расстояние от центра глаза до мыши
+        const angle = Math.atan2(deltaY, deltaX);
+        const distance = Math.min(eyeRect.width / 4, Math.sqrt(deltaX * deltaX + deltaY * deltaY));
+
+        // Установить новую позицию зрачка
+        const pupilX = distance * Math.cos(angle);
+        const pupilY = distance * Math.sin(angle);
+        pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+    });
+});
