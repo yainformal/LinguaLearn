@@ -22,11 +22,18 @@ async def get_response_from_api(message):
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.message_history = []
+        self.history = None
+
     async def connect(self):
         await self.accept()
+        self.message_history = []
         logger.info('WebSocket соединение установлено')
 
     async def disconnect(self, close_code):
+        self.message_history = []
         logger.info(f'WebSocket соединение закрыто: {close_code}')
 
     async def receive(self, text_data):
@@ -36,7 +43,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         logger.info(f'Получено сообщение от {sender}: {message}')
 
         if sender == 'user':
-            await self.process_user_message(message)
+            # Храним в контексте 4 последних сообщения 
+            self.message_history.append(message)
+            if len(self.message_history) > 4:
+                self.message_history.pop(0)
+            logger.info(f'{self.message_history}')
+            await self.process_user_message(self.message_history)
 
     async def process_user_message(self, message):
         # Получение ответа от API
