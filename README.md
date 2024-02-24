@@ -76,7 +76,7 @@ poetry run pylint bookkeeper
 poetry run flake8 bookkeeper
 
 ### Зависимости проекта:
-1. Не забываем обновлять зависимости pip freeze > requirements.txt
+1. Обновляем зависимости pip freeze > requirements.txt
 2. Параллельно ведем файл pyproject
 
 # Напоминание где остановился. 
