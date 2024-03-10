@@ -2,7 +2,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 import json
 import logging
 import httpx
-from django.conf import settings 
+from django.conf import settings
+from conf import GENERATIVE_PARAM
 
 #from LinguaLearn.api import get_response_from_api
 
@@ -12,7 +13,10 @@ logger = logging.getLogger('django.channels')
 # Функция для асинхронного запроса к API
 async def get_response_from_api(message):
     logger.info(f'Вызов метода get {message}')
-    api_url = f'http://127.0.0.1:8000/api/response-lookup/'  # URL вашего API
+    if GENERATIVE_PARAM:
+        api_url = f'http://127.0.0.1:8001/api/generative-response/'
+    else:
+        api_url = f'http://127.0.0.1:8000/api/response-lookup/'  # URL вашего API
     logger.info(f'Вызов {api_url}')
     async with httpx.AsyncClient() as client:
         response = await client.post(api_url, json={'new_question': message})
@@ -48,7 +52,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             if len(self.message_history) > 4:
                 self.message_history.pop(0)
             logger.info(f'{self.message_history}')
-            await self.process_user_message(self.message_history)
+            history_str = " ".join(self.message_history)
+            await self.process_user_message(history_str)
 
     async def process_user_message(self, message):
         # Получение ответа от API

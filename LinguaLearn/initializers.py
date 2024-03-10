@@ -1,10 +1,34 @@
 from moduls.crossencoder import CrossEncoderBert
 from moduls.sbert import Sbert
+from transformers import T5ForConditionalGeneration, AutoTokenizer
 from conf import config
 
 import numpy as np
 from datasets import load_from_disk
-from transformers import BertTokenizer, BertModel
+
+
+def init_app_generative_components():
+    global model, tokenizer, generation_options
+    model = T5ForConditionalGeneration.from_pretrained(config.T5_path).to(config.device)
+    tokenizer = config.init_tokenizer()
+    generation_options = {
+        'do_sample': True,
+        'max_new_tokens': 20,
+        'temperature': 0.9,
+        'repetition_penalty': 1.5,
+        'num_beams': 1,
+        'top_k': 50,
+        'top_p': 0.85,
+        'max_length': config.MAX_LENGTH
+    }
+
+    components = {
+        "model": model,
+        "tokenizer": tokenizer,
+        "generation_options": generation_options
+    }
+
+    return components
 
 
 def init_app_components():
@@ -46,4 +70,3 @@ def init_app_components():
     }
 
     return components
-

@@ -39,4 +39,5 @@ urlpatterns = {
     path('log_out/<int:customer_id>/', views.log_out, name='log_out'),
     path('bot_page/', views.get_chat_bot, name='chat_bot'),
     path('api/response-lookup/', api.ResponseLookupView.as_view(), name='response-lookup'),
+    path('api/generative-response/',api.GenerateResponseLookupView.as_view(), name='generative-response')
 }

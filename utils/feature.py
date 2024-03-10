@@ -8,12 +8,12 @@ from moduls.crossencoder import CrossEncoderBert
 from scipy.spatial.distance import cdist
 from datasets import load_from_disk
 
-#answers_Sbert_embeddings = np.load(config.answers_matrix_path)
-#questions_Sbert_embeddings = np.load(config.questions_matrix_path)
 
-#data = load_from_disk(config.data_path)
-#answers = data["answers"]
+# answers_Sbert_embeddings = np.load(config.answers_matrix_path)
+# questions_Sbert_embeddings = np.load(config.questions_matrix_path)
 
+# data = load_from_disk(config.data_path)
+# answers = data["answers"]
 
 
 def mean_pool(token_embeds: torch.tensor, attention_mask: torch.tensor) -> torch.tensor:
@@ -50,7 +50,7 @@ async def generate_embeddings(dataset, model, tokenizer, device, key='answers'):
 
 
 async def find_top_k_relevant_answers_with_indices(question_embeddings, answers, tokenizer, model, device, k, question,
-                                             key='answers'):
+                                                   key='answers'):
     # Генерация эмбеддинга для заданного вопроса
     request_embedding = await generate_embeddings([{key: question}], model, tokenizer, device, key)
     request_embedding = request_embedding[0].reshape(1, -1)
@@ -84,7 +84,8 @@ def get_ranked_docs(
 
     ranked_docs = [(corpus[ix], scores[ix]) for ix in scores_ix]  # Создаем список кортежей (документ, скор)
 
-    top_doc = ranked_docs[0][0] if ranked_docs else (None, None)   #TODO: Получаем ответ -- костыль из теста. Надо переделать
+    top_doc = ranked_docs[0][0] if ranked_docs else (
+    None, None)  # TODO: Получаем ответ -- костыль из теста. Надо переделать
 
     return top_doc
 
@@ -92,10 +93,12 @@ def get_ranked_docs(
 async def response_lookup(new_question, questions_params, answer_params, tokenizer, CrossEncoder):
     start_time = time.time()
 
-    top_k_questions_with_indices = await find_top_k_relevant_answers_with_indices(*questions_params, new_question, key='questions')
+    top_k_questions_with_indices = await find_top_k_relevant_answers_with_indices(*questions_params, new_question,
+                                                                                  key='questions')
     config.logger.info(f"find_top_k_relevant_answers_with_indices (questions): {time.time() - start_time:.2f} сек.")
     start_time = time.time()
-    top_k_answers_with_indices = await find_top_k_relevant_answers_with_indices(*answer_params, new_question, key="answer")
+    top_k_answers_with_indices = await find_top_k_relevant_answers_with_indices(*answer_params, new_question,
+                                                                                key="answer")
     config.logger.info(f"find_top_k_relevant_answers_with_indices (answers): {time.time() - start_time:.2f} сек.")
     start_time = time.time()
     corpus = [item[0] for item in top_k_answers_with_indices + top_k_questions_with_indices if
@@ -105,4 +108,16 @@ async def response_lookup(new_question, questions_params, answer_params, tokeniz
     response = get_ranked_docs(tokenizer, CrossEncoder, new_question, corpus)
     config.logger.info(f"get_ranked_docs: {time.time() - start_time:.2f} сек.")
 
+    return response
+
+
+async def generate_response(new_question, tokenizer, model, generation_options):
+    start_time = time.time()
+    input_ids = tokenizer.encode(new_question, truncation=True, max_length=generation_options.get("max_length", config.MAX_LENGTH), return_tensors="pt").to(config.device)
+    attention_mask = input_ids.ne(0).int().to(config.device)
+    output_sequences = model.generate(input_ids=input_ids,
+                                      attention_mask=attention_mask,
+                                      **generation_options)
+    response = tokenizer.decode(output_sequences[0], skip_special_tokens=True)
+    config.logger.info(f"generate_response: {time.time() - start_time:.2f} сек.")
     return response
