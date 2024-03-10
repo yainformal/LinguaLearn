@@ -33,12 +33,23 @@ function addUserMessage(message) {
     chatMessages.scrollTop = chatMessages.scrollHeight; // Автопрокрутка к последнему сообщению
 }
 
-function addBotMessage(message) {
+function addBotMessage(fullMessage) {
     const chatMessages = document.getElementById('chat-messages');
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('bot-message');
-    messageDiv.textContent = message;
     chatMessages.appendChild(messageDiv);
+
+    // Функция для "печатания" сообщения посимвольно
+    let index = 0;
+    function typeMessage() {
+        if (index < fullMessage.length) {
+            messageDiv.textContent += fullMessage.charAt(index);
+            index++;
+            setTimeout(typeMessage, 500000); // Устанавливаем задержку в 50 мс
+        }
+    }
+
+    typeMessage(); // Начало процесса "печатания"
     chatMessages.scrollTop = chatMessages.scrollHeight; // Автопрокрутка к последнему сообщению
 }
 
