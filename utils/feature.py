@@ -111,9 +111,13 @@ async def response_lookup(new_question, questions_params, answer_params, tokeniz
     return response
 
 
-async def generate_response(new_question, tokenizer, model, generation_options):
+async def generate_response(new_question, tokenizer, model, generation_options, history = None):
     start_time = time.time()
-    input_ids = tokenizer.encode(new_question, truncation=True, max_length=generation_options.get("max_length", config.MAX_LENGTH), return_tensors="pt").to(config.device)
+    if history:
+        context = " ".join(history[-4:]) + f" User: {new_question}"
+    else:
+        context = new_question
+    input_ids = tokenizer.encode(context, truncation=True, max_length=generation_options.get("max_length", config.MAX_LENGTH), return_tensors="pt").to(config.device)
     attention_mask = input_ids.ne(0).int().to(config.device)
     output_sequences = model.generate(input_ids=input_ids,
                                       attention_mask=attention_mask,

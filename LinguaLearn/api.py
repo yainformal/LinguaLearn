@@ -38,14 +38,19 @@ class GenerateResponseLookupView(View):
         # Получение параметров из запроса
         user_request = json.loads(request.body.decode('utf-8'))
         new_question = user_request.get('new_question')
+        history = user_request.get('history', None)
         app_config = apps.get_app_config('LinguaLearn')
         components = app_config.global_components
         model = components['model']
         tokenizer = components['tokenizer']
         generation_options = components['generation_options']
         new_question = str(new_question)
+
+        if history:
         # Вызов асинхронной функции
-        response = await generate_response(new_question, tokenizer, model, generation_options)
+            response = await generate_response(new_question, tokenizer, model, generation_options, history)
+        else:
+            response = await generate_response(new_question, tokenizer, model, generation_options)
 
         # Возвращение ответа
         return JsonResponse({'response': response})
